@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "$(ls -l -a -u -g -n -h )"
+echo "$(ls -l -a -n)"
