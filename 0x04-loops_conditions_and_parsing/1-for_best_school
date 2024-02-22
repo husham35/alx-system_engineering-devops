@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This shell script prints "Best School" 10 time on the screen
+
+for ((i=0; i < 10; i++))
+do
+	echo "Best School";
+done
