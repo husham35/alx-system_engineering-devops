@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This shell script prints "Best School" 10 times
+# to the screen using a while loop
+
+i=0
+while ((i<10));
+do
+	echo "Best School";
+	((i++))
+done
