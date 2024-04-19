@@ -1,4 +1,4 @@
-# Using Puppet, create a file in `/tmp`.
+# Using Puppet to create a file in `/tmp`.
 # Requirements:
 #     File path is `/tmp/school`
 #     File permission is `0744`
@@ -14,5 +14,5 @@ file { $doc_path:
 	mode    => '0744',
 	owner   => 'www-data',
 	group   => 'www-data',
-	content => 'I love Puppet'
+	content => 'I love Puppet',
 }
