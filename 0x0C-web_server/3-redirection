@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Bash script to configure Nginx server so that
 # /redirect_me is redirecting to another page.
 
