@@ -11,16 +11,19 @@
 #     new Ubuntu machine to respect above requirements
 
 apt-get -y update
-apt-get install -y haproxy
+apt-get -y install --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.8
+apt-get -y install haproxy=2.8.\*
 
-printf %s "
+printf %s "global
 frontend husham35.tech
-	bind *:80
+	bind 0.0.0.0:80
 	mode http
-	defautl_backend techgist-backend
+	default_backend husham35-backend
 
-backend techgist-backend
-	balance roundrobin
+backend husham35-backend
+    mode http
+    balance roundrobin
 	option forwardfor
 	server 414519-web-01 54.83.170.40 check
 	server 414519-web-02 18.209.179.183 check
