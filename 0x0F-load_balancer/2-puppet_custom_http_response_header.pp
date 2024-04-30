@@ -1,33 +1,28 @@
-#!/usr/bin/env bash
-# Install and configure HAproxy on your lb-01 server.
-# Requirements:
-#   - Configure HAproxy so that it send traffic to web-01 and web-02
-#   - Distribute requests using a roundrobin algorithm
-#   - Make sure that HAproxy can be managed via an init script
-#   - Make sure that your servers are configured with the right
-#     hostnames: [STUDENT_ID]-web-01 and [STUDENT_ID]-web-02.
-#     If not, follow this tutorial.
-#   - For your answer file, write a Bash script that configures a
-#     new Ubuntu machine to respect above requirements
+# Automate the task of creating a custom HTTP header response, but with Puppet.
+#  The name of the custom HTTP header must be X-Served-By
+#  The value of the custom HTTP header must be the hostname of the server Nginx is running on
+#  Write 2-puppet_custom_http_response_header.pp so that it configures a brand new Ubuntu machine to the requirements asked in this task
 
-apt-get -y update
-apt-get install -y haproxy
+exec {'update':
+  provider => shell,
+  command  => 'sudo apt-get -y update',
+  before   => Exec['install Nginx'],
+}
 
-printf %s "
-frontend husham35.tech
-	bind *:80
-	mode http
-	defautl_backend techgist-backend
+exec {'install Nginx':
+  provider => shell,
+  command  => 'sudo apt-get -y install nginx',
+  before   => Exec['add_header'],
+}
 
-backend techgist-backend
-	balance roundrobin
-	option forwardfor
-	server 414519-web-01 54.83.170.40 check
-	server 414519-web-02 18.209.179.183 check
-" >> /etc/haproxy/haproxy.cfg
+exec { 'add_header':
+  provider    => shell,
+  environment => ["HOST=${hostname}"],
+  command     => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOST\";/" /etc/nginx/nginx.conf',
+  before      => Exec['restart Nginx'],
+}
 
-printf %s "
-ENABLED=1
-" >> /etc/default/haproxy
-
-service haproxy restart
+exec { 'restart Nginx':
+  provider => shell,
+  command  => 'sudo service nginx restart',
+}
