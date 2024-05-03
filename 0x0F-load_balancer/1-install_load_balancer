@@ -15,9 +15,9 @@ apt-get -y install --no-install-recommends software-properties-common
 add-apt-repository ppa:vbernat/haproxy-2.8
 apt-get -y install haproxy=2.8.\*
 
-printf %s "global
+printf %s "
 frontend husham35.tech
-	bind 0.0.0.0:80
+	bind *:80
 	mode http
 	default_backend husham35-backend
 
@@ -25,8 +25,8 @@ backend husham35-backend
     mode http
     balance roundrobin
 	option forwardfor
-	server 414519-web-01 54.83.170.40 check
-	server 414519-web-02 18.209.179.183 check
+	server 414519-web-01 54.83.170.40:80 check
+	server 414519-web-02 18.209.179.183:80 check
 " >> /etc/haproxy/haproxy.cfg
 
 printf %s "
