@@ -27,7 +27,7 @@ if __name__ == '__main__':
     todos = requests.get(url + "/todos", params={"userId": employee_id}).json()
 
     completed_tasks = [data.get('title')
-                 for data in todos if data.get('completed') is True]
+                       for data in todos if data.get('completed') is True]
 
     number_of_task = len(todos)
     count_of_completed_task = len(completed_tasks)
