@@ -10,23 +10,24 @@ import requests
 import sys
 
 if __name__ == '__main__':
-    url = 'https://jsonplaceholder.typicode.com/'
-    emp_id = sys.argv[1]
-    file_name = emp_id + '.json'
+    url = "https://jsonplaceholder.typicode.com"
+    user_id = sys.argv[1]
 
-    user = requests.get(f"{url}/users/{emp_id}").json()
+    user = requests.get(f"{url}/users/{user_id}").json()
+    todos = requests.get(url + "/todos", params={"userId": user_id}).json()
 
-    todos = requests.get(url + "/todos", params={"userId": emp_id}).json()
-    emp_name = user.get('name')
+    username = user.get('username')
 
-    emp_dict = {}
     data = []
+    dict = {}
 
-    for item in todos:
-        data.append({'task': item.get('title'),
-                     'completed': item.get('completed'), 'username': emp_name})
+    for todo in todos:
+        data.append({'task': todo.get('title'),
+                    'completed': todo.get('completed'), 'username': username})
 
-    emp_dict[emp_id] = data
-    with open(file_name, "w", encoding='utf-8') as jsonfile:
-        json_text_file = json.dumps(emp_dict)
-        jsonfile.write(json_text_file)
+    dict[user_id] = data
+
+    file_name = user_id + ".json"
+    with open(file_name, "w", encoding="utf-8") as json_file:
+        json_text = json.dumps(dict)
+        json_file.write(json_text)
