@@ -10,7 +10,7 @@ if __name__ == '__main__':
     url = "https://jsonplaceholder.typicode.com"
     employee_id = sys.argv[1]
 
-    user = requests.get("{url}/users/{employee_id}").json()
+    user = requests.get(f"{url}/users/{employee_id}").json()
     todos = requests.get(url + "/todos", params={"userId": employee_id}).json()
 
     completed_tasks = [data.get('title')
