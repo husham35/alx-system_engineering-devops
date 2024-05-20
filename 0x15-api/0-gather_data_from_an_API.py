@@ -23,7 +23,7 @@ if __name__ == '__main__':
   url = 'https://jsonplaceholder.typicode.com/'
   emp_id = sys.argv[1]
 
-  user = requests.get(f"{url}/users/emp_id").json()
+  user = requests.get(f"{url}/users/{emp_id}").json()
   todos = requests.get(url + "/todos", params={"userId": emp_id}).json()
   done = [data.get('title') for data in todos if data.get('completed') is True]
   tasks = len(todos)

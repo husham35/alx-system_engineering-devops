@@ -15,15 +15,15 @@ if __name__ == '__main__':
   emp_id = sys.argv[1]
   file_name = emp_id + '.csv'
 
-  user = requests.get(f"{url}/users/emp_id").json()
-  username = user.get('username')
+  user = requests.get(f"{url}/users/{emp_id}").json()
+  emp_name = user.get('name')
 
   todos = requests.get(url + "/todos", params={"userId": emp_id}).json()
 
   rows = []
 
   for data in todos:
-    rows.append([emp_id, username, data.get('completed'), data.get('title')])
+    rows.append([emp_id, emp_name, data.get('completed'), data.get('title')])
   
   with open(file_name, "w", newline="") as csvfile:
     writer =  csv.writer(csvfile, delimiter=',',
