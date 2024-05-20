@@ -16,9 +16,9 @@ if __name__ == '__main__':
     completed_tasks = [data.get('title')
                        for data in todos if data.get('completed') is True]
 
-    number_of_task = len(todos)
-    count_of_completed_task = len(completed_tasks)
-    employee_name = user.get('name')
+    num_tasks = len(todos)
+    done_tasks = len(completed_tasks)
+    emp_name = user.get('name')
 
-    print(f"Employee {employee_name} is done with tasks({count_of_completed_task}/{number_of_task}): ")
+    print(f"Employee {emp_name} is done with tasks({done_tasks}/{num_tasks}):")
     [print(f"\t {title}") for title in completed_tasks]
