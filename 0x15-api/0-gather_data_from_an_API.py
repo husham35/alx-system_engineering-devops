@@ -20,6 +20,5 @@ if __name__ == '__main__':
     count_of_completed_task = len(completed_tasks)
     employee_name = user.get('name')
 
-    print(f"Employee {employee_name} is done with
-          tasks({count_of_completed_task}/{number_of_task}): ")
+    print(f"Employee {employee_name} is done with tasks({count_of_completed_task}/{number_of_task}): ")
     [print(f"\t {title}") for title in completed_tasks]
