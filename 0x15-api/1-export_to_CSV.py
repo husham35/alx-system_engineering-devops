@@ -11,22 +11,21 @@ import requests
 import sys
 
 if __name__ == '__main__':
-    url = 'https://jsonplaceholder.typicode.com/'
-    emp_id = sys.argv[1]
-    file_name = emp_id + '.csv'
+    url = "https://jsonplaceholder.typicode.com"
+    user_id = sys.argv[1]
 
-    user = requests.get(f"{url}/users/{emp_id}").json()
-    emp_name = user.get('name')
+    user = requests.get(f"{url}/users/{user_id}").json()
+    todos = requests.get(url + "/todos", params={"userId": user_id}).json()
 
-    todos = requests.get(url + "/todos", params={"userId": emp_id}).json()
+    username = user.get('username')
+    file_name = user_id + ".csv"
 
     rows = []
-
     for data in todos:
-        rows.append([emp_id, emp_name, data.get('completed'),
-                     data.get('title')])
+        rows.append([user_id, username, data.get(
+            'completed'), data.get('title')])
 
-    with open(file_name, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile, delimiter=',',
+    with open(file_name, "w", newline="") as csv_file:
+        writer = csv.writer(csv_file, delimiter=',',
                             quotechar='"', quoting=csv.QUOTE_ALL)
         [writer.writerow(row) for row in rows]
