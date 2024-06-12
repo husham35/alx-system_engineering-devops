@@ -1,0 +1,50 @@
+# Configure Nginx to serve your page from the route /airbnb-onepage/
+# Requirements:
+#   Nginx must serve this page both locally and on its public IP on port 80.
+#   Nginx should proxy requests to the process listening on port 5000.
+
+server { 
+		# listen on port 80 by default
+		listen 80 default_server;
+		listen [::]:80 default_server;
+
+        # server ip address
+        server_name 54.83.170.40;
+
+        # headers
+        add_header Server $nginx_version;
+        add_header Date $date_gmt;
+        add_header Content-Type text/html;
+        add_header Content-Length $sent_http_content_length;
+        add_header Last-Modified $sent_http_last_modified;
+        add_header Connection keep-alive;
+        add_header ETag $sent_http_etag;
+        add_header X-Served-By $hostname;
+
+        root /etc/nginx/html/;
+        index index.html index.htm index.html-debian.html;
+
+        # serve /airbnb-onepage/
+        location /airbnb-onepage/ {
+                proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+        }
+
+        # redirect to google
+        location /redirect_me{
+            return 301 https://www.google.com/;
+        }
+
+        error_page 404 /404.html;
+        location /404{
+            root /etc/nginx/html/;
+            internal;
+        }
+
+        location /hbnb_static/ {
+        alias /data/web_static/current/;
+        index index.html;
+        # Enable directory listing (if desired)
+        # autoindex on;
+        }
+
+}
