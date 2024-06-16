@@ -9,9 +9,9 @@
 
 
 server { 
-		# listen on port 80 by default
-		listen 80 default_server;
-		listen [::]:80 default_server;
+	# listen on port 80 by default
+	listen 80 default_server;
+	listen [::]:80 default_server;
 
         # server ip address
         server_name 54.83.170.40;
@@ -34,16 +34,16 @@ server {
                 proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
         }
 
-		# serve /number_odd_or_even/ with params
+	# serve /number_odd_or_even/ with params
         location  /airbnb-dynamic/number_odd_or_even/ {
             include proxy_params;
             proxy_pass http://127.0.0.1:5001/number_odd_or_even/;
         }
 
-		# serve AirBnB_clone_v3 API
-    	location /api {
-            include proxy_params;
-            proxy_pass http://127.0.0.1:5002/api;
+	# serve AirBnB_clone_v3 API
+    	location /api/ {
+            #include proxy_params;
+            proxy_pass http://127.0.0.1:5002/api/;
         }
 
         # redirect to google
