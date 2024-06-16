@@ -9,9 +9,9 @@
 
 
 server { 
-	# listen on port 80 by default
-	listen 80 default_server;
-	listen [::]:80 default_server;
+        # listen on port 80 by default
+        listen 80 default_server;
+        listen [::]:80 default_server;
 
         # server ip address
         server_name 54.83.170.40;
